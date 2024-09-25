@@ -1,11 +1,11 @@
 const express = require('express');
 const { createTodo,updateTodo } = require('./types');
-
+const {todo} = require('./db');
 const app = express();
 
 app.use(express.json());
 
-app.post('/todo',(req,res)=>{
+app.post('/todo',async (req,res)=>{
     const createLoad  = req.body;
     const parsedLoad = createTodo.safeParse(createLoad);
     if(!parsedLoad.success){
@@ -14,13 +14,20 @@ app.post('/todo',(req,res)=>{
         })
         return;
     }
+    await todo.create({
+        title: createLoad.title,
+        description: createLoad.description,
+        completed: false
+    })
 })
 
-app.get('/todos',(req,res)=> {
-
+app.get('/todos',async(req,res)=> {
+    
+    const todos = await todo.find({});
+    res.json(todos);
 })
 
-app.put('/completed',(req,res)=>{
+app.put('/completed',async (req,res)=>{
     const id = req.body;
     const parsedId = updateTodo.safeParse(id);
     if(!parsedId.success){
@@ -29,4 +36,12 @@ app.put('/completed',(req,res)=>{
         })
         return;
     }
+    await todo.update({
+        _id: id
+    },{
+        completed: true
+    })
+    res.json({
+        msg: "Todo marked as completed"
+    })
 })
