@@ -12,6 +12,7 @@ app.post('/todo',(req,res)=>{
         res.status(411).json({
             msg: "You sent the wrong inputs"
         })
+        return;
     }
 })
 
@@ -26,5 +27,6 @@ app.put('/completed',(req,res)=>{
         res.status(411).json({
             msg: "You sent the wrong inputs"
         })
+        return;
     }
 })
