@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const { createTodo,updateTodo } = require('./types');
 const {todo} = require('./db');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/todo',async (req,res)=>{
     const createLoad  = req.body;
@@ -18,6 +20,10 @@ app.post('/todo',async (req,res)=>{
         title: createLoad.title,
         description: createLoad.description,
         completed: false
+    })
+
+    res.json({
+        msg: "completed"
     })
 })
 
@@ -45,3 +51,5 @@ app.put('/completed',async (req,res)=>{
         msg: "Todo marked as completed"
     })
 })
+
+app.listen("3000")
