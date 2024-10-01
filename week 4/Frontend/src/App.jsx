@@ -12,15 +12,11 @@ function App() {
     fetch("http://localhost:3000/todos")
       .then(async function(res) {
         const data = await res.json();
-        console.log(data,"point");
         setTodos(data);
       })
       .catch(error => console.error('Error fetching todos:', error));
   }, []);
-
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
+  
   return (
     
       <div>
