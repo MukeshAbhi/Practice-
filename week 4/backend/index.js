@@ -30,7 +30,7 @@ app.post('/todo',async (req,res)=>{
 app.get('/todos',async(req,res)=> {
     
     const todos = await todo.find({});
-    res.json(todos);
+    res.send(todos);
 })
 
 app.put('/completed',async (req,res)=>{
